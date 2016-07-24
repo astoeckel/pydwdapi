@@ -527,17 +527,22 @@ class WeatherHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(json.dumps({"error": msg}).encode("utf-8"))
 
     def do_GET(self):
-        def interpolate(key):
+        def interpolate(key, min=None, max=None):
             global api
             response = api.interpolate(key, [lat], [lon], [alt], data)
             if response is None:
                 return None
             else:
-                return response[0]
+                res = response[0]
+                if (not min is None) and res < min:
+                    res = min
+                if (not max is None) and res > max:
+                    res = max
+                return res
 
-        def write_interpolated(tar, key, key_tar=None):
+        def write_interpolated(tar, key, key_tar=None, min=None, max=None):
             key_tar = key if key_tar is None else key_tar
-            res = interpolate(key)
+            res = interpolate(key, min, max)
             if not res is None:
                 tar[key_tar] = res
 
@@ -579,13 +584,13 @@ class WeatherHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             # Query the weather data and add it to the response
             data = api.query()
             write_interpolated(response["main"], "temperature", "temp")
-            write_interpolated(response["main"], "pressure")
-            write_interpolated(response["main"], "humidity")
-            write_interpolated(response["main"], "precipitation")
-            write_interpolated(response["wind"], "wind_speed", "speed")
-            write_interpolated(response["wind"], "wind_speed_max", "max")
-            wind_x = interpolate("wind_direction_x")
-            wind_y = interpolate("wind_direction_y")
+            write_interpolated(response["main"], "pressure", min=0.0)
+            write_interpolated(response["main"], "humidity", min=0.0, max=100.0)
+            write_interpolated(response["main"], "precipitation", min=0.0)
+            write_interpolated(response["wind"], "wind_speed", "speed", min=0.0)
+            write_interpolated(response["wind"], "wind_speed_max", "max", min=0.0)
+            wind_x = interpolate("wind_direction_x", min=0.0, max=1.0)
+            wind_y = interpolate("wind_direction_y", min=0.0, max=1.0)
             if not ((wind_x is None) or (wind_y is None)):
                 deg = math.atan2(-wind_x, wind_y) / math.pi * 180.0 + 180.0
                 response["wind"]["deg"] = deg
