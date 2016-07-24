@@ -57,7 +57,7 @@ times):
 
 An instance of the server is publicly available at
 ```
-https://somweyr.de/pydwdapi/api/1.0/weather?lat=50.0&lon=16.26&alt=89
+https://somweyr.de/pydwdapi/api/1.0/weather?lat=<LATITUDE>&lon=<LONGITUDE>&alt=<ALTITUDE>
 ```
 Please use this URL for testing purposes only.
 
