@@ -93,6 +93,7 @@ with or endorsed by the DWD.
 License
 -------
 
+```
 Simple REST HTTP Weather Server using DWD weather data for Germany
 Copyright (C) 2016 Andreas Stöckel
 
@@ -108,4 +109,4 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+```
