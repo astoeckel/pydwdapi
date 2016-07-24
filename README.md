@@ -16,10 +16,10 @@ The HTTP server can be started using the following command line:
 ```bash
 ./pydwdapi <DWD FTP USER> <DWD FTP PASSWORD> <HTTP PORT>
 ```
-Where the username and password are your GDS-FTP account data. Note that the
-HTTP server will only listen on localhost. If you want to make the service
-available on the internet or via HTTPS, consider using a reverse proxy such as
-*nginx*.
+Where the user name and password are your GDS-FTP account data. Note that the
+HTTP server will only listen on localhost. If you want to have the service
+available on the internet or via HTTPS, I strongly consider using a reverse
+proxy such as *nginx*.
 
 You can now query the weather data from HTTP using the following URL:
 ```
@@ -55,7 +55,7 @@ times):
 }
 ```
 
-An instance of the server is publically available at
+An instance of the server is publicly available at
 ```
 https://somweyr.de/pydwdapi/api/1.0/weather?lat=50.0&lon=16.26&alt=89
 ```
@@ -65,15 +65,21 @@ Please use this URL for testing purposes only.
 How it works
 ------------
 
+### Step 1: Querying
 The program is extremely simple. When a request is received, it downloads the
-newest station data from the GDS FTP server or reads it from a cache. Stations
-are then associated with their coordinates using a hand-crafted table. The
-compund data is then stored in a numpy structured array. The individual
-modalities are interpolated for the given coordinate triple using the scipy
-radial basis function interpolator. A non-euclidean norm is used to make sure
-that a spherical distance is used for the station-to-station distance.
-Furthermore a higher weight is given to changes in altitude, as these have a
-relatively high impact on weather data. E.g. data from the Zugspitze would
+newest station data from the GDS FTP server or reads it from a cache.
+
+### Step 2: Coordinate association
+The stations are then associated with their coordinates using a hand-crafted
+table. The resulting compound data is stored in a NumPy structured array.
+
+### Step 3: Interpolation
+The individual modalities are interpolated for the given coordinate triple using
+the SciPy radial basis function interpolator. A non-euclidean norm is used to
+make sure that a spherical distance is used for the station-to-station distance.
+
+Furthermore a higher weight is used for altitudinal differences, as these have a
+potentially higher impact on weather data. E.g. data from the Zugspitze would
 influence the data in the entirety of south Germany if the altitude would not
 be weighted correctly.
 
@@ -90,7 +96,7 @@ This project is not yet fully finished. The following features are planned:
 Disclaimer
 ----------
 
-This project was a little sunday afternoon fun project. **Do not** use the
+This project was a little Sunday afternoon fun project. **Do not** use the
 resulting data for any serious application. Interpolation between sparse weather
 station data **may go terribly wrong**. This program is in no way affiliated
 with or endorsed by the DWD.
