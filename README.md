@@ -56,22 +56,22 @@ times):
 ```
 
 An instance of the server is publically available at
-
 ```
-https://somweyr.de/pydwdapi/api/weather
+https://somweyr.de/pydwdapi/api/1.0/weather?lat=50.0&lon=16.26&alt=89
 ```
+Please use this URL for testing purposes only.
 
 
 How it works
 ------------
 
-The program is extremely simple: When a request is received, the program
-downloads the newest station data from the GDS FTP server or reads it from
-a cache. Stations are associated with their coordinates and their data is stored
-in a numpy structured array. The individual modalities are then interpolated for
+The program is extremely simple. When a request is received, it downloads the
+newest station data from the GDS FTP server or reads it from a cache. Stations
+are associated with their coordinates. This compund data is then stored in a
+numpy structured array. The individual modalities are then interpolated for
 the given coordinate triple using the scipy radial basis function interpolator.
 
-Todo
+ToDo
 ----
 
 This project is not yet fully finished. The following features are planned:
@@ -84,10 +84,10 @@ This project is not yet fully finished. The following features are planned:
 Disclaimer
 ----------
 
-This project was a sunday-afternoon fun project. Do not use the resulting data
-for any serious application. Interpolation between sparse weather station data
-may go terribly wrong. This program is in no way affiliated with or endorsed by
-the DWD.
+This project was a little sunday afternoon fun project. **Do not** use the
+resulting data for any serious application. Interpolation between sparse weather
+station data **may go terribly wrong**. This program is in no way affiliated
+with or endorsed by the DWD.
 
 
 License
