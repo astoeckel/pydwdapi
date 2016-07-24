@@ -67,9 +67,15 @@ How it works
 
 The program is extremely simple. When a request is received, it downloads the
 newest station data from the GDS FTP server or reads it from a cache. Stations
-are associated with their coordinates. This compund data is then stored in a
-numpy structured array. The individual modalities are then interpolated for
-the given coordinate triple using the scipy radial basis function interpolator.
+are then associated with their coordinates using a hand-crafted table. The
+compund data is then stored in a numpy structured array. The individual
+modalities are interpolated for the given coordinate triple using the scipy
+radial basis function interpolator. A non-euclidean norm is used to make sure
+that a spherical distance is used for the station-to-station distance.
+Furthermore a higher weight is given to changes in altitude, as these have a
+relatively high impact on weather data. E.g. data from the Zugspitze would
+influence the data in the entirety of south Germany if the altitude would not
+be weighted correctly.
 
 ToDo
 ----
@@ -110,3 +116,4 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
+
