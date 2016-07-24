@@ -589,8 +589,8 @@ class WeatherHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             write_interpolated(response["main"], "precipitation", min=0.0)
             write_interpolated(response["wind"], "wind_speed", "speed", min=0.0)
             write_interpolated(response["wind"], "wind_speed_max", "max", min=0.0)
-            wind_x = interpolate("wind_direction_x", min=0.0, max=1.0)
-            wind_y = interpolate("wind_direction_y", min=0.0, max=1.0)
+            wind_x = interpolate("wind_direction_x", min=-1.0, max=1.0)
+            wind_y = interpolate("wind_direction_y", min=-1.0, max=1.0)
             if not ((wind_x is None) or (wind_y is None)):
                 deg = math.atan2(-wind_x, wind_y) / math.pi * 180.0 + 180.0
                 response["wind"]["deg"] = deg
