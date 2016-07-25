@@ -110,6 +110,40 @@ RECORD_DTYPE = [
     ("wind_direction_y", "f4"), ("wind_speed", "f4"), ("wind_speed_max", "f4")
 ]
 
+# Map used to define the value range used for coloring the maps
+MODALITY_VRANGE = {
+    "temperature": (-20, 45),
+    "humidity": (0, 100),
+    "precipitation": (0, 100),
+    "pressure": (985, 1035),
+    "wind_speed": (0, 90),
+    "wind_speed_max": (0, 90),
+    "wind_direction_x": (-1, 1),
+    "wind_direction_y": (-1, 1)
+}
+
+# Map used to define the human readable titles that should be plotted along with
+# the map
+MODALITY_TITLES = {
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "precipitation": "Precipation",
+    "pressure": "Pressure",
+    "wind_speed": "Wind speed",
+    "wind_speed_max": "Wind speed (max. values)",
+    "wind_direction_x": "Wind direction (x-component)",
+    "wind_direction_y": "Wind direction (y-component)",
+}
+
+MODALITY_UNITS = {
+    "temperature": "°C",
+    "humidity": "%",
+    "precipitation": "mm",
+    "pressure": "hPa",
+    "wind_speed": "m/s",
+    "wind_speed_max": "m/s"
+}
+
 # Border contour used when plotting the data
 # https://www.google.com/fusiontables/data?docid=1zn8cjdD6qlAFI7ALMEnwn89g50weLi1D-bAGSZw
 GERMAN_BORDER = [
@@ -543,43 +577,68 @@ class PyDWDApi:
         max_values = max(data[key][flt])
         return np.maximum(np.minimum(res, max_values), min_values)
 
-    def plot_map(self, key, resolution=32, altitude=100):
+    def plot_map(self, key, resolution=256, altitude=100):
         """
         Returns a Matplotlib figure which pictures the given quantity. Mainly
         for debugging purposes.
         """
+        import matplotlib
         import matplotlib.pyplot as plt
 
-        data = self.query()
-        flt = self._data_filter(data, key)
+        station_coords = np.array(list(DWD_STATION_LOCATION_MAP.values()))[:, 1:3]
+        min_lat = np.min(station_coords[:, 0]) - 0.5
+        max_lat = np.max(station_coords[:, 0]) + 0.5
+        min_lon = np.min(station_coords[:, 1]) - 0.5
+        max_lon = np.max(station_coords[:, 1]) + 0.5
 
-        min_lat = np.min(data["latitude"][flt])
-        max_lat = np.max(data["latitude"][flt])
-        min_lon = np.min(data["longitude"][flt])
-        max_lon = np.max(data["longitude"][flt])
-
-        lats, lons, alts = np.meshgrid(
+        lats, lons = np.meshgrid(
             np.linspace(min_lat, max_lat, resolution),
-            np.linspace(min_lon, max_lon, resolution), [altitude])
+            np.linspace(min_lon, max_lon, resolution))
+        if isinstance(altitude, AltitudeData):
+            alts = np.maximum(altitude.query(lats, lons), 0)
+        else:
+            alts = np.tile(altitude, (resolution, resolution))
+        lats = np.reshape(lats, (resolution, resolution, 1))
+        lons = np.reshape(lons, (resolution, resolution, 1))
+        alts = np.reshape(alts, (resolution, resolution, 1))
 
-        zzs = self.interpolate(key, lats, lons, alts, data)[:, :, 0]
+        zzs = self.interpolate(key, lats, lons, alts)[:, :, 0]
 
-        fig = plt.figure()
-        ax = fig.gca()
+        # Fetch the currect value range for coloring the map
+        if key in MODALITY_VRANGE:
+            vmin, vmax = MODALITY_VRANGE[key]
+        else:
+            vmin, vmax = (np.min(zzs), np.max(zzs))
+
+        # Plot the map itself
+        fig = plt.figure(figsize=(10, 11.75))
+        ax = fig.add_axes([0.0, 0.05, 1.0, 0.95])
         ax.imshow(zzs.T,
                   extent=[min_lon, max_lon, min_lat, max_lat],
-                  origin="lower")
+                  origin="lower", vmin=vmin, vmax=vmax)
         for name, loc in DWD_STATION_LOCATION_MAP.items():
-            ax.plot(loc[2], loc[1], '+', markersize=5, color='k')
+            ax.plot(loc[2], loc[1], '+', markersize=10, color='k')
             ax.annotate(name,
                         xy=(loc[2], loc[1]),
-                        xytext=(0.1, 0.1),
+                        xytext=(0.2, 0.2),
                         textcoords='offset points')
         border = np.array(GERMAN_BORDER)
         ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
-        ax.set_title(key)
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
+        ax.set_xlim(min_lon, max_lon)
+        ax.set_ylim(min_lat, max_lat)
+        ax.set_aspect((max_lon - min_lon) / (max_lat - min_lat))
+
+        # Plot the colorbar
+        title = MODALITY_TITLES[key] if key in MODALITY_TITLES else key
+        unit = " [" + MODALITY_UNITS[key] + "]" if key in MODALITY_UNITS else ""
+        ax_cbar = fig.add_axes([0.0, 0.0, 1.0, 0.025])
+        cbar = matplotlib.colorbar.ColorbarBase(ax_cbar,
+                orientation='horizontal',
+                norm=matplotlib.colors.Normalize(vmin, vmax))
+        cbar.set_label(title + unit)
+
         return fig
 
 ################################################################################
