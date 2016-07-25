@@ -255,6 +255,74 @@ DWD_STATION_LOCATION_MAP = {
 }
 
 ################################################################################
+# ALTITUDE DATA
+################################################################################
+
+class AltitudeData:
+    """
+    Simple class for reading and querying altitude data.
+    """
+
+    def __init__(self):
+        self.meta = {
+            "ncols": 0,
+            "nrows": 0,
+            "xllcorner": 0.0,
+            "yllcorner": 0.0,
+            "cellsize": 0.0
+        }
+        self.data = np.array(())
+        self.xs = np.array(())
+        self.ys = np.array(())
+
+    def read(self, f):
+        """
+        Reads the altitude data from an ArcGIS ASCII Grid file. Such a file can
+        be obtained from http://maps.ngdc.noaa.gov/viewers/wcs-client/
+        """
+        in_header = True
+        i = 0
+        for s in f.readlines():
+            s = s.decode("ascii")
+            if in_header:
+                if s[0].isalpha():
+                    key, value = map(lambda x: x.strip().lower(), s[:-1].split(" ", 1))
+                    if key in self.meta:
+                        self.meta[key] = type(self.meta[key])(value)
+                else:
+                    in_header = False
+                    self.data = np.zeros((self.meta["nrows"], self.meta["ncols"]))
+            elif i < self.meta["nrows"]:
+                row = list(map(float, filter(None, s[:-1].split(" "))))
+                if len(row) == self.meta["ncols"]:
+                    self.data[i] = row
+                else:
+                    raise Exception("Invalid row length")
+                i = i + 1
+            else:
+                raise Exception("Invalid row count")
+
+        # Flip the data -- origin is in the lower-left corner
+        self.data = np.flipud(self.data)
+
+        # Create the grid meta information
+        ncols = self.meta["ncols"]; nrows = self.meta["nrows"]
+        xmin = self.meta["xllcorner"]; ymin = self.meta["yllcorner"]
+        xmax = xmin + self.meta["cellsize"] * (ncols - 1)
+        ymax = ymin + self.meta["cellsize"] * (nrows - 1)
+        self.xs = np.linspace(xmin, xmax, ncols)
+        self.ys = np.linspace(ymin, ymax, nrows)
+
+    def query(self, lats, lons):
+        """
+        Returns the altitude data for the given points stored in lats and lons.
+        lats and lons must have the same shape and may for example be created by
+        a call to numpy.meshgrid().
+        """
+        import scipy.interpolate
+        return scipy.interpolate.interpn((self.ys, self.xs), self.data, (lats, lons))
+
+################################################################################
 # WEATHER DATA HANDLING
 ################################################################################
 
