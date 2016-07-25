@@ -771,3 +771,32 @@ if __name__ == '__main__':
     sys.stdout.write("\nStopping HTTP server...\n")
     httpd.shutdown()
 
+#
+# Example code for plotting the maps
+#
+
+#    sys.stdout.write("Loading altitude data...\n")
+#    import bz2
+#    alt_data = AltitudeData()
+#    with bz2.BZ2File("data/etopo1_germany.asc.bz2") as f:
+#        alt_data.read(f)
+
+#    api.plot_map("temperature", altitude=alt_data).savefig("temperature.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+#    api.plot_map("humidity", altitude=alt_data).savefig("humidity.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+#    api.plot_map("pressure", altitude=alt_data).savefig("pressure.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+#    api.plot_map("wind_speed", altitude=alt_data).savefig("wind_speed.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+#    api.plot_map("wind_speed_max", altitude=alt_data).savefig("wind_speed_max.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+#    api.plot_map("precipitation", altitude=alt_data).savefig("precipitation.pdf",
+#                format='pdf',
+#                bbox_inches='tight')
+
