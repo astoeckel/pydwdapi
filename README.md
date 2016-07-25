@@ -1,6 +1,8 @@
 PyDWDApi
 ========
 
+![Temperature map example](https://raw.githubusercontent.com/astoeckel/pydwdapi/master/docs/example_temperature.png)
+
 *PyDWDApi* is a simple HTTP REST server which allows interpolated access to
 weather data made available by the German Weather Service (Deutscher
 Wetterdienst, DWD). Only yields sane results for locations within Germany.
@@ -61,6 +63,14 @@ https://somweyr.de/pydwdapi/api/1.0/weather?lat=<LATITUDE>&lon=<LONGITUDE>&alt=<
 ```
 Please use this URL for testing purposes only.
 
+Altitude data
+-------------
+
+The included altitude data for Germany was downloaded from the NOAA of the
+National Centers for Environmental Information. You can download your own data
+from [here](http://maps.ngdc.noaa.gov/viewers/wcs-client/). Make sure to select
+the `ETIOI1 (ice)` layer and `ArcGIS ASCII Grid` as output format.
+
 
 How it works
 ------------
@@ -91,6 +101,8 @@ This project is not yet fully finished. The following features are planned:
 * Interpolation of the general weather status code (clear, cloudy, rain, ...)
 * Pretty map generation (currently only implemented for debugging)
 * Make sure response JSON is compatible with `openweathermap`
+* Automatically read altitude from the altitude map if not given in the query
+* Perform some cross-validation experiments
 
 
 Disclaimer
