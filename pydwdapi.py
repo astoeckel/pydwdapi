@@ -535,8 +535,13 @@ class PyDWDApi:
                                      data[key][flt],
                                      function="linear",
                                      norm=data_norm)
+        res = rbfi(lats, lons, alts)
 
-        return rbfi(lats, lons, alts)
+        # Clamp the resulting values to the minimum and maximum that are
+        # actually ocurring
+        min_values = min(data[key][flt])
+        max_values = max(data[key][flt])
+        return np.maximum(np.minimum(res, max_values), min_values)
 
     def plot_map(self, key, resolution=32, altitude=100):
         """
