@@ -170,7 +170,7 @@ DWD_SERVER = "ftp-outgoing2.dwd.de"
 # Directory from which the newest file is read
 DWD_OBSERVATIONS_URL = "gds/specials/observations/tables/germany/"
 
-# Coordinates (altitude, longitude, latitude) for each of the stations present
+# Coordinates (altitude, latitude, longitude) for each of the stations present
 # in the dataset
 DWD_STATION_LOCATION_MAP = {
     "Aachen": (231, 50.8, 6.02),
