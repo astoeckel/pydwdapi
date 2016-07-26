@@ -20,6 +20,7 @@ import ftplib
 import logging
 logger = logging.getLogger("pydwdapi")
 
+
 def download_newest(session, path, matcher, since=None):
     """
     Downloads either the newest files from a directory on an FTP server or the
@@ -92,7 +93,6 @@ def download_newest(session, path, matcher, since=None):
         res.append((entry[0], entry[1], buf))
     return res
 
-
 ################################################################################
 # MAIN PROGRAM
 ################################################################################
@@ -110,7 +110,8 @@ if __name__ == '__main__':
         f.connect(sys.argv[1])
         f.login(sys.argv[2], sys.argv[3])
         since = None if len(sys.argv) == 6 else float(sys.argv[6])
-        res = download_newest(f, sys.argv[4], re.compile(sys.argv[5]).match, since)
+        res = download_newest(f, sys.argv[4], re.compile(sys.argv[5]).match,
+                              since)
     for e in res:
         print(e[0], e[1], len(e[2]))
         with open(e[1], "wb") as f:
