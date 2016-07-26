@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stations>
+	<!-- German stations -->
+	<station alt="38" id="0" lat="52.9" lon="12.81" name="Neuruppin"/>
+	<station alt="930" id="100" lat="47.87" lon="8.0" name="Feldberg/Schw."/>
+	<station alt="4" id="200" lat="53.05" lon="8.8" name="Bremen-Flh."/>
+	<station alt="238" id="300" lat="51.16" lon="14.95" name="Görlitz"/>
+	<station alt="497" id="400" lat="49.95" lon="7.26" name="Hahn-Flh."/>
+	<station alt="155" id="500" lat="48.36" lon="7.83" name="Lahr"/>
+	<station alt="81" id="600" lat="52.38" lon="13.06" name="Potsdam"/>
+	<station alt="132" id="700" lat="49.73" lon="6.61" name="Trier"/>
+	<station alt="1141" id="800" lat="51.8" lon="10.62" name="Brocken"/>
+	<station alt="11" id="900" lat="53.63" lon="9.99" name="Hamburg-Flh."/>
+	<station alt="55" id="1000" lat="52.46" lon="9.68" name="Hannover-Flh."/>
+	<station alt="150" id="1100" lat="51.4" lon="6.97" name="Essen"/>
+	<station alt="92" id="1200" lat="50.86" lon="7.16" name="Köln/Bonn-Flh."/>
+	<station alt="96" id="1300" lat="49.51" lon="8.55" name="Mannheim"/>
+	<station alt="73" id="1400" lat="53.52" lon="12.67" name="Waren"/>
+	<station alt="27" id="1500" lat="54.38" lon="10.14" name="Kiel"/>
+	<station alt="51" id="1600" lat="52.45" lon="13.3" name="Berlin-Dahlem"/>
+	<station alt="450" id="1700" lat="50.56" lon="10.38" name="Meiningen"/>
+	<station alt="276" id="1800" lat="49.21" lon="9.52" name="Öhringen"/>
+	<station alt="565" id="1900" lat="50.31" lon="11.88" name="Hof"/>
+	<station alt="311" id="2000" lat="50.88" lon="12.13" name="Gera"/>
+	<station alt="54" id="2100" lat="53.03" lon="13.99" name="Angermünde"/>
+	<station alt="11" id="2200" lat="53.71" lon="7.15" name="Norderney"/>
+	<station alt="5" id="2300" lat="53.87" lon="8.71" name="Cuxhaven"/>
+	<station alt="140" id="2400" lat="51.78" lon="8.82" name="Bad Lippspringe"/>
+	<station alt="81" id="2500" lat="53.32" lon="11.93" name="Marnitz"/>
+	<station alt="806" id="2600" lat="47.4" lon="10.28" name="Oberstdorf"/>
+	<station alt="0" id="2700" lat="54.16" lon="6.35" name="UFS TW Ems"/>
+	<station alt="172" id="2800" lat="51.12" lon="9.28" name="Fritzlar"/>
+	<station alt="100" id="2900" lat="50.03" lon="8.57" name="Frankfurt/M-Flh."/>
+	<station alt="368" id="3000" lat="49.43" lon="11.25" name="Nürnberg-Flh."/>
+	<station alt="461" id="3100" lat="48.43" lon="10.94" name="Augsburg"/>
+	<station alt="4" id="3200" lat="54.17" lon="7.89" name="Helgoland"/>
+	<station alt="76" id="3300" lat="52.1" lon="11.58" name="Magdeburg"/>
+	<station alt="705" id="3400" lat="47.72" lon="10.33" name="Kempten"/>
+	<station alt="221" id="3500" lat="51.13" lon="13.76" name="Dresden-Flh."/>
+	<station alt="2962" id="3600" lat="47.42" lon="10.98" name="Zugspitze"/>
+	<station alt="98" id="3700" lat="52.21" lon="14.12" name="Lindenberg"/>
+	<station alt="320" id="3800" lat="49.21" lon="7.11" name="Saarbrücken-Flh."/>
+	<station alt="26" id="3900" lat="55.01" lon="8.41" name="List/Sylt"/>
+	<station alt="3" id="4000" lat="54.53" lon="11.06" name="Fehmarn"/>
+	<station alt="36" id="4100" lat="52.56" lon="13.31" name="Berlin-Tegel"/>
+	<station alt="2" id="4200" lat="54.1" lon="13.41" name="Greifswald"/>
+	<station alt="839" id="4300" lat="51.18" lon="8.49" name="Kahler Asten"/>
+	<station alt="268" id="4400" lat="49.77" lon="9.96" name="Würzburg"/>
+	<station alt="977" id="4500" lat="47.8" lon="11.01" name="Hohenpeissenberg"/>
+	<station alt="59" id="4600" lat="53.64" lon="11.39" name="Schwerin"/>
+	<station alt="446" id="4700" lat="48.35" lon="11.81" name="München-Flh."/>
+	<station alt="48" id="4800" lat="52.13" lon="7.7" name="Münster/Osnabr.-Flh."/>
+	<station alt="4" id="4900" lat="54.18" lon="12.08" name="Rostock"/>
+	<station alt="440" id="5000" lat="49.67" lon="12.18" name="Weiden"/>
+	<station alt="476" id="5100" lat="48.55" lon="13.35" name="Fürstenzell"/>
+	<station alt="119" id="5200" lat="50.09" lon="8.79" name="OF-Wetterpark"/>
+	<station alt="17" id="5300" lat="52.97" lon="11.14" name="Lüchow"/>
+	<station alt="42" id="5400" lat="54.68" lon="13.43" name="Arkona"/>
+	<station alt="0" id="5500" lat="53.39" lon="7.23" name="Emden"/>
+	<station alt="921" id="5600" lat="50.5" lon="9.94" name="Wasserkuppe"/>
+	<station alt="734" id="5700" lat="48.67" lon="9.86" name="Stötten"/>
+	<station alt="1455" id="5800" lat="49.11" lon="13.14" name="Grosser Arber"/>
+	<station alt="0" id="5900" lat="53.86" lon="8.13" name="Leuchtt. Alte Weser"/>
+	<station alt="43" id="6000" lat="54.53" lon="9.55" name="Schleswig"/>
+	<station alt="0" id="6100" lat="54.5" lon="10.27" name="Leuchtturm Kiel"/>
+	<station alt="350" id="6200" lat="48.83" lon="12.56" name="Straubing"/>
+	<station alt="48" id="6300" lat="52.47" lon="13.4" name="Berlin-Tempelhof"/>
+	<station alt="240" id="6400" lat="49.87" lon="10.92" name="Bamberg"/>
+	<station alt="116" id="6500" lat="48.96" lon="8.29" name="Karlsruhe-Rheinst."/>
+	<station alt="654" id="6600" lat="49.98" lon="11.84" name="Fichtelberg"/>
+	<station alt="485" id="6700" lat="50.36" lon="6.87" name="Nürburg"/>
+	<station alt="316" id="6800" lat="50.98" lon="10.96" name="Erfurt"/>
+	<station alt="0" id="6900" lat="54.18" lon="7.46" name="UFS Deutsche Bucht"/>
+	<station alt="37" id="7000" lat="51.3" lon="6.77" name="Düsseldorf-Flh."/>
+	<station alt="797" id="7100" lat="48.45" lon="8.41" name="Freudenstadt"/>
+	<station alt="131" id="7200" lat="51.43" lon="12.24" name="Leipzig-Flh."/>
+	<station alt="231" id="7300" lat="50.8" lon="6.02" name="Aachen"/>
+	<station alt="365" id="7400" lat="49.04" lon="12.1" name="Regensburg"/>
+	<station alt="371" id="7500" lat="48.69" lon="9.22" name="Stuttgart-Flh."/>
+	<station alt="443" id="7600" lat="47.68" lon="9.19" name="Konstanz"/>
+	<station alt="203" id="7700" lat="50.6" lon="8.64" name="Gießen/Wettenberg"/>
+	<station alt="69" id="7800" lat="51.78" lon="14.32" name="Cottbus"/>
+
+	<!-- European stations -->
+	<station name="Algier" alt="29" lat="36.75377" lon="3.058793" id="10000"/>
+	<station name="Alicante" alt="43" lat="38.345996" lon="-0.490686" id="10100"/>
+	<station name="Amsterdam" alt="-4" lat="52.370216" lon="4.895168" id="10200"/>
+	<station name="Ankara" alt="949" lat="39.933364" lon="32.859742" id="10300"/>
+	<station name="Athen" alt="15" lat="37.98381" lon="23.727539" id="10400"/>
+	<station name="Barcelona" alt="4" lat="41.385064" lon="2.173403" id="10500"/>
+	<station name="Bari" alt="49" lat="41.117143" lon="16.871871" id="10600"/>
+	<station name="Belgrad" alt="132" lat="44.786568" lon="20.448922" id="10700"/>
+	<!--<station name="Berlin" alt="50" lat="52.520007" lon="13.404954" id="10800"/>-->
+	<station id="1600" name="Berlin"/> <!-- Alias for Berlin-Dahlem -->
+	<station name="Bordeaux" alt="61" lat="44.837789" lon="-0.57918" id="10900"/>
+	<station name="Bratislava" alt="134" lat="48.148597" lon="17.107748" id="11000"/>
+	<station name="Brest" alt="99" lat="48.390394" lon="-4.486076" id="11100"/>
+	<!--<station name="Brocken" alt="1142" lat="51.799423" lon="10.615218" id="11200"/>-->
+	<station name="Brüssel" alt="58" lat="50.85034" lon="4.35171" id="11300"/>
+	<station name="Budapest" alt="139" lat="47.497912" lon="19.040235" id="11400"/>
+	<station name="Bukarest" alt="91" lat="44.426767" lon="26.102538" id="11500"/>
+	<station name="Cork" alt="162" lat="51.896892" lon="-8.486316" id="11600"/>
+	<!--<station name="Dresden" alt="230" lat="51.050409" lon="13.737262" id="11700"/>-->
+	<station id="3500" name="Dresden"/> <!-- Alias for Dresden-Flh. -->
+	<station name="Dublin" alt="85" lat="53.349805" lon="-6.26031" id="11800"/>
+	<station name="Dubrovnik" alt="164" lat="42.650661" lon="18.094424" id="11900"/>
+	<station name="Faro" alt="8" lat="57.944187" lon="19.142479" id="12000"/>
+	<!--<station name="Feldberg/Schw." alt="1486" lat="47.858997" lon="8.037044" id="12100"/>-->
+	<!--<station name="Frankfurt/Flh." alt="112" lat="50.110922" lon="8.682127" id="12200"/>-->
+	<station id="2900" name="Frakfurt/Flh."/> <!-- Alias for Frankfurt/M-Flh. -->
+	<station name="Genf" alt="420" lat="46.204391" lon="6.143158" id="12300"/>
+	<station name="Genua" alt="3" lat="44.40565" lon="8.946256" id="12400"/>
+	<station name="Graz" alt="340" lat="47.070714" lon="15.439504" id="12500"/>
+	<!--<station name="Hamburg" alt="16" lat="53.551085" lon="9.993682" id="12600"/>-->
+	<station id="900" name="Hamburg"/> <!-- Alias for Hamburg-Flh. -->
+	<!--<station name="Helgoland" alt="4" lat="54.180327" lon="7.888944" id="12700"/>-->
+	<station name="Helsinki" alt="53" lat="60.169856" lon="24.938379" id="12800"/>
+	<station name="Heraklion" alt="37" lat="35.338735" lon="25.144213" id="12900"/>
+	<station name="Ibiza" alt="6" lat="38.906734" lon="1.420598" id="13000"/>
+	<station name="Innsbruck" alt="579" lat="47.269212" lon="11.404102" id="13100"/>
+	<station name="Istanbul" alt="37" lat="41.008238" lon="28.978359" id="13200"/>
+	<station name="Izmir" alt="120" lat="38.423734" lon="27.142826" id="13300"/>
+	<station name="Kairo" alt="75" lat="30.04442" lon="31.235712" id="13400"/>
+	<station name="Kiew" alt="167" lat="50.4501" lon="30.5234" id="13500"/>
+	<!--<station name="Köln" alt="91" lat="50.937531" lon="6.960279" id="13600"/>-->
+	<station id="1200" name="Köln"/> <!-- Alias for Köln/Bonn-Flh. -->
+	<station name="Kopenhagen" alt="5" lat="55.676097" lon="12.568337" id="13700"/>
+	<station name="La Coruna" alt="67" lat="43.362344" lon="-8.41154" id="13800"/>
+	<station name="Larnaka" alt="2" lat="34.900254" lon="33.623172" id="13900"/>
+	<station name="Las Palmas" alt="47" lat="28.123546" lon="-15.436257" id="14000"/>
+	<station name="Lerwick" alt="84" lat="60.152987" lon="-1.149293" id="14100"/>
+	<station name="Lissabon" alt="77" lat="38.722252" lon="-9.139337" id="14200"/>
+	<station name="Ljubljana" alt="298" lat="46.056947" lon="14.505751" id="14300"/>
+	<station name="London" alt="25" lat="51.507351" lon="-0.127758" id="14400"/>
+	<station name="Luxemburg" alt="379" lat="49.815273" lon="6.129583" id="14500"/>
+	<station name="Madrid" alt="609" lat="40.416775" lon="-3.70379" id="14600"/>
+	<station name="Mailand" alt="103" lat="45.465422" lon="9.185924" id="14700"/>
+	<station name="Malaga" alt="16" lat="36.721261" lon="-4.421266" id="14800"/>
+	<station name="Malta" alt="56" lat="35.937496" lon="14.375416" id="14900"/>
+	<station name="Messina" alt="51" lat="38.193814" lon="15.554015" id="15000"/>
+	<station name="Minsk" alt="231" lat="53.90454" lon="27.561524" id="15100"/>
+	<station name="Montpellier" alt="8" lat="43.610769" lon="3.876716" id="15200"/>
+	<station name="Moskau" alt="156" lat="55.755826" lon="37.6173" id="15300"/>
+	<!--<station name="München" alt="453" lat="48.135125" lon="11.581981" id="15400"/>-->
+	<station id="4700" name="München"/> <!-- Alias for München-Flh. -->
+	<station name="Nizza" alt="27" lat="43.710173" lon="7.261953" id="15500"/>
+	<station name="Odense" alt="17" lat="55.403756" lon="10.40237" id="15600"/>
+	<station name="Odessa" alt="42" lat="46.4857" lon="30.7434" id="15700"/>
+	<station name="Oslo" alt="46" lat="59.913869" lon="10.752245" id="15800"/>
+	<station name="Palma[de Mallorca]" alt="4" lat="39.569601" lon="2.65016" id="15900"/>
+	<station name="Paris" alt="90" lat="48.856614" lon="2.352222" id="16000"/>
+	<station name="Porto" alt="49" lat="41.157944" lon="-8.629105" id="16100"/>
+	<station name="Prag" alt="365" lat="50.075538" lon="14.4378" id="16200"/>
+	<station name="Rabat" alt="79" lat="33.97159" lon="-6.849813" id="16300"/>
+	<station name="Rennes" alt="43" lat="48.117266" lon="-1.677793" id="16400"/>
+	<station name="Reykjavik" alt="52" lat="64.126521" lon="-21.817439" id="16500"/>
+	<station name="Rhodos" alt="35" lat="36.434963" lon="28.217483" id="16600"/>
+	<station name="Riga" alt="26" lat="56.949649" lon="24.105186" id="16700"/>
+	<station name="Rom" alt="105" lat="41.9" lon="12.5" id="16800"/>
+	<station name="Salzburg" alt="430" lat="47.80949" lon="13.05501" id="16900"/>
+	<station name="Santander" alt="6" lat="43.462306" lon="-3.80998" id="17000"/>
+	<station name="Sarajevo" alt="638" lat="43.856259" lon="18.413076" id="17100"/>
+	<station name="Sofia" alt="595" lat="42.697708" lon="23.321868" id="17200"/>
+	<station name="Split" alt="122" lat="43.508132" lon="16.440193" id="17300"/>
+	<station name="St. Petersburg" alt="6" lat="59.9333" lon="30.266" id="17400"/>
+	<station name="Stavanger" alt="9" lat="58.969976" lon="5.733107" id="17500"/>
+	<station name="Stockholm" alt="15" lat="59.329323" lon="18.068581" id="17600"/>
+	<station name="Strassburg" alt="153" lat="48.573405" lon="7.752111" id="17700"/>
+	<!--<station name="Stuttgart" alt="396" lat="48.775846" lon="9.182932" id="17800"/>-->
+	<station id="7500" name="Stuttgart"/> <!-- Alias for Stuttgart-Flh. -->
+	<station name="Tallinn" alt="34" lat="59.436961" lon="24.753575" id="17900"/>
+	<station name="Thessaloniki" alt="4" lat="40.640063" lon="22.944419" id="18000"/>
+	<station name="Tromsoe" alt="103" lat="69.753158" lon="18.466054" id="18100"/>
+	<station name="Tunis" alt="4" lat="33.886917" lon="9.537499" id="18200"/>
+	<station name="Vaduz" alt="460" lat="47.14103" lon="9.520928" id="18300"/>
+	<station name="Varna" alt="43" lat="43.21405" lon="27.914733" id="18400"/>
+	<station name="Vigo" alt="264" lat="42.240599" lon="-8.720727" id="18500"/>
+	<station name="Vilnius" alt="156" lat="54.687156" lon="25.279651" id="18600"/>
+	<station name="Wien" alt="209" lat="48.208174" lon="16.373819" id="18700"/>
+	<!--<station name="Zugspitze" alt="2960" lat="47.421066" lon="10.985365" id="18800"/>-->
+	<station name="Zürich" alt="436" lat="47.376887" lon="8.541694" id="18900"/>
+</stations>
