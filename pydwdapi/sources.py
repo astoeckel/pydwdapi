@@ -17,13 +17,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import ftplib
-import ftp_util
-import html_dwd_observation_parser
 import time
 import re
 import xml.etree.ElementTree
 import logging
 logger = logging.getLogger("pydwdapi")
+
+from . import ftp_util
+from . import html_dwd_observation_parser
 
 # FTP server URL
 DWD_SERVER = "ftp-outgoing2.dwd.de"
