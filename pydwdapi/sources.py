@@ -113,7 +113,7 @@ class Sources:
 if __name__ == '__main__':
     import sys
     import json
-    from db import Database
+    from database import Database
     from stations import Stations
 
     logging.basicConfig(
