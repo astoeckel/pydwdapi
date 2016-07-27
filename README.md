@@ -20,7 +20,7 @@ The HTTP server can be started using the following command line:
 ```
 Where the user name and password are your GDS-FTP account data. Note that the
 HTTP server will only listen on localhost. If you intend to publish the service
-on the internet or via HTTPS, you should consider using a reverse proxy such as *nginx*.
+on the internet, you should consider using a reverse proxy such as *nginx*.
 
 You can now query the weather data from HTTP using the following URL:
 ```
