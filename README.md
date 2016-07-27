@@ -62,15 +62,6 @@ https://somweyr.de/pydwdapi/api/1.0/weather?lat=<LATITUDE>&lon=<LONGITUDE>&alt=<
 ```
 Please use this URL for testing purposes only.
 
-Altitude data
--------------
-
-The included altitude data for Germany was downloaded from the National Oceanic and
-Atmospheric Administration (NOAA) of the National Centers for Environmental Information.
-You can download your own data from [here](http://maps.ngdc.noaa.gov/viewers/wcs-client/).
-Make sure to select the `ETIOI1 (ice)` layer and `ArcGIS ASCII Grid` as output format.
-
-
 How it works
 ------------
 
@@ -112,6 +103,13 @@ resulting data for any serious application. Interpolation between sparse weather
 station data **may go terribly wrong**. This program is in no way affiliated
 with or endorsed by the DWD.
 
+Altitude data
+-------------
+
+The included altitude data for Germany was downloaded from the National Oceanic and
+Atmospheric Administration (NOAA) of the National Centers for Environmental Information.
+You can download your own data from [here](http://maps.ngdc.noaa.gov/viewers/wcs-client/).
+Make sure to select the `ETIOI1 (ice)` layer and `ArcGIS ASCII Grid` as output format.
 
 License
 -------
