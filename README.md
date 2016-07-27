@@ -12,13 +12,13 @@ Usage
 
 This program requires Python 3, including the Python packages `numpy`, `scipy`
 and optionally `matplotlib`. You will also need a free GDS-FTP account which you
-can request [here](http://www.dwd.de/DE/fachnutzer/dienstleister/grundversorgung/grundversorgung_node.html).
+can request [here](http://www.dwd.de/DE/fachnutzer/dienstleister/grundversorgung/grundversorgung_node.html) (note that account activation may take up to an hour).
 
 The HTTP server can be started using the following command line:
 ```bash
-./pydwdapi <DWD FTP USER> <DWD FTP PASSWORD> <HTTP PORT>
+./pydwdapi.py <DWD FTP USER> <DWD FTP PASSWORD> <HTTP PORT>
 ```
-Where the user name and password are your GDS-FTP account data. Note that the
+Where the `<DWD FTP USER>` and `<DWD FTP PASSWORD>` are your GDS-FTP account data. Note that the
 HTTP server will only listen on localhost. If you intend to publish the service
 on the internet, you should consider using a reverse proxy such as *nginx*.
 
@@ -28,9 +28,9 @@ http://localhost:<PORT>/api/1.0/weather?lat=<LATITUDE>&lon=<LONGITUDE>&alt=<ALTI
 ```
 The parameters have the following meaning:
 
-* _lat_: Latitude in degrees
-* _lon_: Longitude in degrees
-* _alt_: Altitude in meters above sea level
+* `lat`: Latitude in degrees
+* `lon`: Longitude in degrees
+* `alt`: Altitude in meters above sea level
 
 An example result might be the following (some keys may not be available at all
 times):
