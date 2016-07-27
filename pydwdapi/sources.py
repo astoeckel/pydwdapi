@@ -61,6 +61,7 @@ class Sources:
                 f.login(ftp_user, ftp_password)
             connected["value"] = True
 
+        has_changes = False
         with ftplib.FTP() as f:
             # Iterate over all sources an check whether a source needs to be
             # updated
@@ -101,11 +102,13 @@ class Sources:
                             database.store_observation(modified, value,
                                                        modality, station_id,
                                                        source_id)
+                            has_changes = True
                     database.set_source_time(source_id, modified)
                 else:
                     logger.debug("Source " + source["path"] +
                                  " is up to date, next update in " + str(
                                      int(timeout - now + source_time)) + "s")
+        return has_changes
 
 ################################################################################
 # MAIN PROGRAM
