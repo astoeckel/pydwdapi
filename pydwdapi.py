@@ -481,6 +481,7 @@ class PyDWDApi:
                     scale.append(1.0)
             else:
                 header.append(None)
+                scale.append(1.0)
 
         # Parse the actual data
         for j, row in enumerate(tbl[1:]):
