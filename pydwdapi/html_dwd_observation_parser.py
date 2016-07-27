@@ -116,7 +116,10 @@ if __name__ == '__main__':
     import sys
     import json
 
-    logger.addHandler(logging.StreamHandler(sys.stderr))
+    logging.basicConfig(
+        stream=sys.stderr,
+        level=logging.DEBUG,
+        format='%(filename)s:%(lineno)s %(levelname)s:%(message)s')
 
     if len(sys.argv) != 3:
         sys.stderr.write(
