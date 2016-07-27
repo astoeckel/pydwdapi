@@ -44,7 +44,7 @@ class HTMLTableParser(HTMLParser):
 
     def __init__(self, decode_html_entities=False, data_separator=' ', ):
 
-        HTMLParser.__init__(self)
+        HTMLParser.__init__(self, convert_charrefs=True)
 
         self._parse_html_entities = decode_html_entities
         self._data_separator = data_separator
@@ -481,6 +481,7 @@ class PyDWDApi:
                     scale.append(1.0)
             else:
                 header.append(None)
+                scale.append(1.0)
 
         # Parse the actual data
         for j, row in enumerate(tbl[1:]):
@@ -616,14 +617,19 @@ class PyDWDApi:
         ax.imshow(zzs.T,
                   extent=[min_lon, max_lon, min_lat, max_lat],
                   origin="lower", vmin=vmin, vmax=vmax)
+
+        # Plot Germany's outline
+        border = np.array(GERMAN_BORDER)
+        ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
+
+        # Plot used stations' locations and names
         for name, loc in DWD_STATION_LOCATION_MAP.items():
             ax.plot(loc[2], loc[1], '+', markersize=10, color='k')
             ax.annotate(name,
                         xy=(loc[2], loc[1]),
                         xytext=(0.2, 0.2),
                         textcoords='offset points')
-        border = np.array(GERMAN_BORDER)
-        ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
+
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
         ax.set_xlim(min_lon, max_lon)
