@@ -29,7 +29,6 @@ from . import html_dwd_observation_parser
 # FTP server URL
 DWD_SERVER = "ftp-outgoing2.dwd.de"
 
-
 class Sources:
     """
     Class responsible for keeping the data stored in the data-base up to date
