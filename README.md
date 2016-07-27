@@ -19,9 +19,8 @@ The HTTP server can be started using the following command line:
 ./pydwdapi <DWD FTP USER> <DWD FTP PASSWORD> <HTTP PORT>
 ```
 Where the user name and password are your GDS-FTP account data. Note that the
-HTTP server will only listen on localhost. If you want to have the service
-available on the internet or via HTTPS, I strongly consider using a reverse
-proxy such as *nginx*.
+HTTP server will only listen on localhost. If you intend to publish the service
+on the internet or via HTTPS, you should consider using a reverse proxy such as *nginx*.
 
 You can now query the weather data from HTTP using the following URL:
 ```
@@ -66,10 +65,10 @@ Please use this URL for testing purposes only.
 Altitude data
 -------------
 
-The included altitude data for Germany was downloaded from the NOAA of the
-National Centers for Environmental Information. You can download your own data
-from [here](http://maps.ngdc.noaa.gov/viewers/wcs-client/). Make sure to select
-the `ETIOI1 (ice)` layer and `ArcGIS ASCII Grid` as output format.
+The included altitude data for Germany was downloaded from the National Oceanic and
+Atmospheric Administration (NOAA) of the National Centers for Environmental Information.
+You can download your own data from [here](http://maps.ngdc.noaa.gov/viewers/wcs-client/).
+Make sure to select the `ETIOI1 (ice)` layer and `ArcGIS ASCII Grid` as output format.
 
 
 How it works
@@ -77,7 +76,7 @@ How it works
 
 ### Step 1: Querying
 The program is extremely simple. When a request is received, it downloads the
-newest station data from the GDS FTP server or reads it from a cache.
+newest station data from the DWD GDS FTP server or reads it from a cache.
 
 ### Step 2: Coordinate association
 The stations are then associated with their coordinates using a hand-crafted
@@ -134,4 +133,3 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ```
-
