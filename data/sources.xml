@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<sources>
+	<source id="100">
+		<type>html_dwd_observations</type>
+		<path>gds/specials/observations/tables/germany/</path>
+		<matcher>.*_U_HTML</matcher>
+		<timeout>1800</timeout>
+	</source>
+	<source id="200">
+		<type>html_dwd_observations</type>
+		<path>gds/specials/observations/tables/world/</path>
+		<matcher>Daten_Europa_.*_HTML</matcher>
+		<timeout>10800</timeout>
+	</source>
+</sources>
+
