@@ -44,7 +44,7 @@ class HTMLTableParser(HTMLParser):
 
     def __init__(self, decode_html_entities=False, data_separator=' ', ):
 
-        HTMLParser.__init__(self)
+        HTMLParser.__init__(self, convert_charrefs=True)
 
         self._parse_html_entities = decode_html_entities
         self._data_separator = data_separator
