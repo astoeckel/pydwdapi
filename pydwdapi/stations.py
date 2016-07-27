@@ -64,6 +64,18 @@ class Stations:
                 raise Exception("No coordinates specified for station " + str(
                     sid))
 
+    def name_and_location_list(self):
+        """
+        Returns a list containing the name and location of each station. The
+        shortes available name is returned.
+        """
+        res = []
+        for sid in self.ids.keys():
+            sname = sorted(self.ids[sid], key=lambda x: len(x))[0]
+            slat, slon, salt = self.coords[sid]
+            res.append((sname, slat, slon, salt))
+        return res
+
 ################################################################################
 # MAIN PROGRAM
 ################################################################################
