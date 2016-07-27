@@ -85,7 +85,7 @@ table. The resulting compound data is stored in a NumPy structured array.
 ### Step 3: Interpolation
 The individual modalities are interpolated for the given coordinate triple using
 the SciPy radial basis function interpolator. A non-euclidean norm is used to
-make sure that a spherical distance is used for the station-to-station distance.
+make sure that a geodesic distance is used for the station-to-station distance.
 
 Furthermore a higher weight is used for altitudinal differences, as these have a
 potentially higher impact on weather data. E.g. data from the Zugspitze would
