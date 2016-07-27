@@ -39,6 +39,7 @@ DWD_KEY_MAP = {
     "STATION": "station",
     "Station": "station",
     "LUFTD.": "pressure",
+    "Luftd.": "pressure",
     "Luftdruck": "pressure",
     "TEMP.": "temperature",
     "Temp.": "temperature",
