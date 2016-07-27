@@ -107,7 +107,7 @@
 	<station name="Faro" alt="8" lat="57.944187" lon="19.142479" id="12000"/>
 	<!--<station name="Feldberg/Schw." alt="1486" lat="47.858997" lon="8.037044" id="12100"/>-->
 	<!--<station name="Frankfurt/Flh." alt="112" lat="50.110922" lon="8.682127" id="12200"/>-->
-	<station id="2900" name="Frakfurt/Flh."/> <!-- Alias for Frankfurt/M-Flh. -->
+	<station id="2900" name="Frankfurt/Flh."/> <!-- Alias for Frankfurt/M-Flh. -->
 	<station name="Genf" alt="420" lat="46.204391" lon="6.143158" id="12300"/>
 	<station name="Genua" alt="3" lat="44.40565" lon="8.946256" id="12400"/>
 	<station name="Graz" alt="340" lat="47.070714" lon="15.439504" id="12500"/>
