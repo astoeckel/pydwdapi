@@ -83,7 +83,7 @@ MODALITY_UNITS = {
 MODALITY_VRANGE = {
     "temperature": (-10, 40),
     "humidity": (0, 100),
-    "precipitation": (0, 100),
+    "precipitation": (0, 10),
     "pressure": (985, 1035),
     "wind_speed": (0, 40),
     "wind_speed_max": (0, 40),
