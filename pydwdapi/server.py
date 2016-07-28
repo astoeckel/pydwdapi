@@ -60,7 +60,7 @@ def create_server(api, port=8080, interface="127.0.0.1"):
                     tar[key_tar] = round(res[0][0], 2)
                     response["dt"] = max(res_ts, response["dt"])
                 except Exception:
-                    raise
+                    pass
 
             response = {"coord": {}, "main": {}, "wind": {}, "dt": 0.0}
             try:
