@@ -28,6 +28,7 @@ if __name__ == '__main__':
             "Usage: ./render.py <DWD FTP USER> <DWD FTP PASSWORD> <MODALITY>\n")
         sys.exit(1)
 
+    # Setup logging
     logging.basicConfig(
         stream=sys.stderr,
         level=logging.DEBUG,
