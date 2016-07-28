@@ -28,7 +28,7 @@ MODALITY_ALTITUDE_WEIGHT = {
     "pressure": 0.0,
     "wind_speed": 50.0,
     "wind_speed_max": 50.0,
-    "wind_direction": 10.0
+    "wind_direction": 0.0
 }
 
 # Number of dimensions used when interpolating a modality
