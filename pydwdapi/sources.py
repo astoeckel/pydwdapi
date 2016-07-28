@@ -31,6 +31,13 @@ logger = logging.getLogger("pydwdapi")
 # FTP server URL
 DWD_SERVER = "ftp-outgoing2.dwd.de"
 
+# Minimum timeout which has to pass after a source is querried again
+MIN_BACKOFF = 60.0
+
+# Maximum timeout which has to pass after a source is querried again
+MAX_BACKOFF = 600.0
+
+
 class Sources:
     """
     Class responsible for keeping the data stored in the data-base up to date
@@ -39,6 +46,7 @@ class Sources:
 
     def __init__(self, config_file):
         self.sources = {}
+        self.backoff = {}
 
         tree = xml.etree.ElementTree.parse(config_file)
         for source in tree.getroot():
@@ -85,12 +93,19 @@ class Sources:
                     if modified <= source_time:
                         # There was no update -- try again in a few minutes with
                         # exponential backoff (min 1-10 minute wait time)
-                        backoff = min(600.0, max(
-                            60.0, (source_time - modified) * 1.5))
-                        database.set_source_time(now - timeout + backoff)
-                        log.debug("No update for " + source["path"] +
-                                  "trying again in " + str(int(backoff)) + "s")
+                        if not source_id in self.backoff:
+                            self.backoff[source_id] = 0.0
+                        self.backoff[source_id] = min(MAX_BACKOFF, max(
+                            MIN_BACKOFF, self.backoff[source_id] * 1.5))
+                        database.set_source_time(
+                            source_id, now - timeout + self.backoff[source_id])
+                        logger.debug("No update for " + source[
+                            "path"] + ", trying again in " + str(int(
+                                self.backoff[source_id])) + "s")
                         continue
+
+                    # We got some data, reset the backoff
+                    self.backoff[source_id] = 0
 
                     # Parse the data and store the results in the database file
                     parsed = html_dwd_observation_parser.parse(
@@ -107,8 +122,8 @@ class Sources:
                     database.set_source_time(source_id, modified)
                 else:
                     logger.debug("Source " + source["path"] +
-                                 " is up to date, next update in " + str(
-                                     int(timeout - now + source_time)) + "s")
+                                 " is up to date, next update in " + str(int(
+                                     timeout - now + source_time)) + "s")
         return has_changes
 
 ################################################################################
