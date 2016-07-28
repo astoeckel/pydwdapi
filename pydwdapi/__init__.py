@@ -81,7 +81,7 @@ MODALITY_UNITS = {
 
 # Map used to define the value range used for coloring the maps
 MODALITY_VRANGE = {
-    "temperature": (-20, 45),
+    "temperature": (-10, 40),
     "humidity": (0, 100),
     "precipitation": (0, 100),
     "pressure": (985, 1035),
