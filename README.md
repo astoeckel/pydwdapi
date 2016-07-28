@@ -62,7 +62,7 @@ times):
 }
 ```
 
-#### Test Server
+### Test Server
 
 An instance of the server is publicly available at
 ```
