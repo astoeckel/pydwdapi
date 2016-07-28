@@ -44,9 +44,9 @@ def create_server(api, port=8080, interface="127.0.0.1"):
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
 
-            self.wfile.write(json.dumps(obj,
-                                        indent=2,
-                                        sort_keys=True).encode("utf-8"))
+            self.wfile.write(
+                json.dumps(
+                    obj, indent=2, sort_keys=True).encode("utf-8"))
 
         def _error(self, http_code, msg):
             self._send_json(http_code, {"error": msg})
@@ -88,6 +88,7 @@ def create_server(api, port=8080, interface="127.0.0.1"):
                                 "No altitude data available for given point, please specify explicitly!")
                             return
                 except Exception:
+                    logger.exception("Error while parsing the arguments")
                     self._error(400, "Invalid query")
                     return
 
@@ -111,8 +112,8 @@ def create_server(api, port=8080, interface="127.0.0.1"):
                 interpolate(response["wind"], "wind_direction", "deg")
 
             except:
-                import traceback
-                self._error(500, traceback.format_exc())
+                logger.exception("Error while processing the request")
+                self._error(500, "Internal error")
                 return
 
             self._send_json(200, response)
@@ -122,7 +123,10 @@ def create_server(api, port=8080, interface="127.0.0.1"):
         timeout = 60.0
 
         def handle_timeout(self):
-            api.update()
+            try:
+                api.update()
+            except Exception:
+                logger.exception("Exception while updating the data")
 
     # Create the server and return it
     httpd = Server((interface, port), Handler)
