@@ -34,7 +34,7 @@ MODALITY_ALTITUDE_WEIGHT = {
 # Number of dimensions used when interpolating a modality
 MODALITY_DIMENSIONS = {"wind_direction": 2}
 
-MODALITY_NO_CLAMP = set("wind_direction")
+MODALITY_NO_CLAMP = set(["wind_direction"])
 
 
 def haversine(lat1, lon1, lat2, lon2):
@@ -157,7 +157,7 @@ class Interpolator:
 
     def _join_values(self, vs):
         if self.modality == "wind_direction":
-            return np.arctan2(vs[1], vs[0]) * 180.0 / math.pi + 180.0
+            return (360.0 + np.arctan2(vs[1], vs[0]) * 180.0 / math.pi) % 360.0
         else:
             return vs[0]
 
