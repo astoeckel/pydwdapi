@@ -104,8 +104,8 @@ class Interpolator:
         self.max_value = max(map(lambda x: x[0], observations.values()))
 
         # Fetch the number of dimensions necessary to represent the value
-        dims = (MODALITY_DIMENSIONS[modality] if
-                modality in MODALITY_DIMENSIONS else 1)
+        dims = (MODALITY_DIMENSIONS[modality]
+                if modality in MODALITY_DIMENSIONS else 1)
 
         # Write the observations into a NumPy array containg the value and
         # the latitude/longitude/altitude, if necessary expand the values
@@ -125,8 +125,8 @@ class Interpolator:
         self.tbl = self.tbl[0:i]
 
         # Read the altitude weight factor for this modality
-        altitude_weight = (MODALITY_ALTITUDE_WEIGHT[modality] if
-                           modality in MODALITY_ALTITUDE_WEIGHT else 1.0)
+        altitude_weight = (MODALITY_ALTITUDE_WEIGHT[modality]
+                           if modality in MODALITY_ALTITUDE_WEIGHT else 1.0)
 
         # Calculate the radial basis functions for each dimension
         self.rbfis = []
@@ -135,13 +135,13 @@ class Interpolator:
             obs_lons = self.tbl[:, 1]
             obs_alts = self.tbl[:, 2]
             obs_values = self.tbl[:, 3 + dim]
-            self.rbfis.append(scipy.interpolate.Rbf(obs_lats,
-                                                    obs_lons,
-                                                    obs_alts,
-                                                    obs_values,
-                                                    function="linear",
-                                                    norm=Norm(
-                                                        altitude_weight)))
+            self.rbfis.append(
+                scipy.interpolate.Rbf(obs_lats,
+                                      obs_lons,
+                                      obs_alts,
+                                      obs_values,
+                                      function="linear",
+                                      norm=Norm(altitude_weight)))
 
     def _split_value(self, v):
         """
