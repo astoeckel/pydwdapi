@@ -20,11 +20,13 @@ import ftplib
 import time
 import re
 import xml.etree.ElementTree
-import logging
-logger = logging.getLogger("pydwdapi")
 
 from . import ftp_util
 from . import html_dwd_observation_parser
+
+# Fetch the logger
+import logging
+logger = logging.getLogger("pydwdapi")
 
 # FTP server URL
 DWD_SERVER = "ftp-outgoing2.dwd.de"
