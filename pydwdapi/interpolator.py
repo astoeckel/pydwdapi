@@ -26,8 +26,8 @@ MODALITY_ALTITUDE_WEIGHT = {
     "humidity": 100.0,
     "precipitation": 10.0,
     "pressure": 0.0,
-    "wind_speed": 10.0,
-    "wind_speed_max": 10.0,
+    "wind_speed": 50.0,
+    "wind_speed_max": 50.0,
     "wind_direction": 10.0
 }
 
