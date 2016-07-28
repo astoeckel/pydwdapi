@@ -128,7 +128,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     stations = Stations(sys.argv[2])
-    with open(sys.argv[1]) as f:
+    with open(sys.argv[1], encoding="latin-1") as f:
         json.dump(parse(f.read(), stations), sys.stdout, indent=4, sort_keys=True)
 
 
