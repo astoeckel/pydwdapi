@@ -88,42 +88,45 @@ class Sources:
                         logger.warn("Failed to download data from " + source[
                             "path"])
 
-                    # Check whether the data was actually update
+                    # Check whether the data was actually updated
                     modified, filename, data = res[0]
-                    if modified <= source_time:
-                        # There was no update -- try again in a few minutes with
-                        # exponential backoff (min 1-10 minute wait time)
-                        if not source_id in self.backoff:
-                            self.backoff[source_id] = 0.0
-                        self.backoff[source_id] = min(MAX_BACKOFF, max(
-                            MIN_BACKOFF, self.backoff[source_id] * 1.5))
-                        database.set_source_time(
-                            source_id, now - timeout + self.backoff[source_id])
-                        logger.debug("No update for " + source[
-                            "path"] + ", trying again in " + str(int(
-                                self.backoff[source_id])) + "s")
-                        continue
+                    if modified > source_time:
+                        # Parse the data and store the results in the database
+                        try:
+                            parsed = html_dwd_observation_parser.parse(
+                                str(data, "latin-1"), stations)
+                            for modality, elems in parsed.items():
+                                logger.debug("Writing " + str(len(
+                                    elems)) + " value(s) for modality " +
+                                             modality + " from source " +
+                                             source["path"])
+                                for station_id, value in elems:
+                                    database.store_observation(
+                                        modified, value, modality, station_id,
+                                        source_id)
+                                    has_changes = True
+                            database.set_source_time(source_id, modified)
+                            self.backoff[source_id] = 0  # Reset the backoff
+                            continue
+                        except Exception:
+                            logger.exception(
+                                "Exception while parsing the observation data")
 
-                    # We got some data, reset the backoff
-                    self.backoff[source_id] = 0
-
-                    # Parse the data and store the results in the database file
-                    parsed = html_dwd_observation_parser.parse(
-                        str(data, "ascii"), stations)
-                    for modality, elems in parsed.items():
-                        logger.debug("Writing " + str(len(
-                            elems)) + " value(s) for modality " + modality +
-                                     " from source " + source["path"])
-                        for station_id, value in elems:
-                            database.store_observation(modified, value,
-                                                       modality, station_id,
-                                                       source_id)
-                            has_changes = True
-                    database.set_source_time(source_id, modified)
+                    # There was no update -- try again in a few minutes with
+                    # exponential backoff (min 1-10 minute wait time)
+                    if not source_id in self.backoff:
+                        self.backoff[source_id] = 0.0
+                    self.backoff[source_id] = min(MAX_BACKOFF, max(
+                        MIN_BACKOFF, self.backoff[source_id] * 1.5))
+                    database.set_source_time(
+                        source_id, now - timeout + self.backoff[source_id])
+                    logger.debug("No update for " + source["path"] +
+                                 ", trying again in " + str(
+                                     int(self.backoff[source_id])) + "s")
                 else:
                     logger.debug("Source " + source["path"] +
-                                 " is up to date, next update in " + str(int(
-                                     timeout - now + source_time)) + "s")
+                                 " is up to date, next update in " + str(
+                                     int(timeout - now + source_time)) + "s")
         return has_changes
 
 ################################################################################
