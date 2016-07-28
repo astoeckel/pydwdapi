@@ -89,7 +89,7 @@ data. The `<MODALITY>` argument can be one of the following:
 * `wind_direction`
 
 The rendered map will be stored as `<MODALITY>.pdf` in the current working
-directory. Note the necessary computations take some time -- if you're in
+directory. The necessary computations will take some time -- if you're in
 a hurry, you can reduce the map resolution by passing a smaller value for
 the `resolution` parameter to the `api.render_map` call (try 128 or 64 instead
 of the default of `256`.
