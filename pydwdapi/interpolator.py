@@ -37,31 +37,16 @@ MODALITY_DIMENSIONS = {"wind_direction": 2}
 MODALITY_NO_CLAMP = set("wind_direction")
 
 
-def deg2rad(deg):
-    """
-    Helper function which converts degrees in the range from 0 to 360 to radians
-    """
-    return deg * math.pi / 180.0
-
-
-def rad2deg(rad):
-    """
-    Converts radians from -pi to pi to value between 0 to 360 degrees.
-    """
-    return rad * 180.0 / math.pi + 180.
-
-
 def haversine(lat1, lon1, lat2, lon2):
     """
     Geodesic distance between two latitude/longitude pairs.
     """
-    R = 6371.0
-    dLat = deg2rad(lat2 - lat1)
-    dLon = deg2rad(lon2 - lon1)
-    a = ((math.sin(dLat * 0.5)**2) + math.cos(deg2rad(lat1)) *
-         math.cos(deg2rad(lat2)) * (math.sin(dLon * 0.5)**2))
-    c = 2.0 * math.atan2(math.sqrt(a), math.sqrt(1.0 - a))
-    return R * c  # Distance in km
+    dLat = lat2 - lat1
+    dLon = lon2 - lon1
+    a = (np.sin(dLat * 0.5)**2) + (np.cos(lat1) * np.cos(lat2) * np.sin(
+        dLon * 0.5)**2)
+    return 2.0 * np.arctan2(np.sqrt(a),
+                            np.sqrt(1.0 - a)) * 6371.0  # Distance in km
 
 
 class Norm:
@@ -74,23 +59,18 @@ class Norm:
         self.altitude_weight = altitude_weight
 
     def __call__(self, x1, x2):
-        x1 = x1[:, :, 0]
-        x2 = x2[:, 0, :]  # Strip away the superfluous dims
-        d1 = x1.shape[1]
-        d2 = x2.shape[1]
-        res = np.zeros((d1, d2))
-        for i in range(d1):
-            for j in range(d2):
-                lat1 = x1[1, i]
-                lon1 = x1[0, i]
-                alt1 = x1[2, i]
-                lat2 = x2[1, j]
-                lon2 = x2[0, j]
-                alt2 = x2[2, j]
-                d_ground = haversine(lat1, lon1, lat2, lon2)
-                d_alt = (alt1 - alt2) / 1000.0 * self.altitude_weight
-                res[i, j] = np.sqrt(d_ground**2 + d_alt**2)
-        return res
+        # Fetch the required dimension vectors
+        lats1 = np.radians(x1[0, :, :])
+        lats2 = np.radians(x2[0, :, :])
+        lons1 = np.radians(x1[1, :, :])
+        lons2 = np.radians(x2[1, :, :])
+        alts1 = x1[2, :, :]
+        alts2 = x2[2, :, :]
+
+        # Calculate the distances
+        d_ground = haversine(lats1, lons1, lats2, lons2)
+        d_alt = (alts1 - alts2) / 1000.0 * self.altitude_weight
+        return np.sqrt(d_ground**2 + d_alt**2)
 
 
 class Interpolator:
@@ -171,13 +151,13 @@ class Interpolator:
         etc.
         """
         if self.modality == "wind_direction":
-            return (math.cos(deg2rad(v)), math.sin(deg2rad(v)))
+            return (math.cos(np.radians(v)), math.sin(np.radians(v)))
         else:
             return (v, )
 
     def _join_values(self, vs):
         if self.modality == "wind_direction":
-            return rad2deg(np.arctan2(vs[1], vs[0]))
+            return np.arctan2(vs[1], vs[0]) * 180.0 / math.pi + 180.0
         else:
             return vs[0]
 
