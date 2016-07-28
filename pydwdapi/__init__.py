@@ -296,7 +296,7 @@ class PyDWDApi:
 
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
-        ax.set_title(time.strftime("%Y/%m/%Y %H:%M", time.localtime(res_ts)))
+        ax.set_title(time.strftime("%Y/%m/%d %H:%M", time.localtime(res_ts)))
         ax.set_xlim(min_lon, max_lon)
         ax.set_ylim(min_lat, max_lat)
         ax.set_aspect((max_lon - min_lon) / (max_lat - min_lat))
