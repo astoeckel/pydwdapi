@@ -113,7 +113,7 @@ def parse(data, stations):
 ################################################################################
 
 if __name__ == '__main__':
-    from stations import Stations
+    from .stations import Stations
     import sys
     import json
 
