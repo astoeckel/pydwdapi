@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # Setup logging
     logging.basicConfig(
         stream=sys.stderr,
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(filename)s:%(lineno)s %(levelname)s:%(message)s')
 
     # Create the API instance
