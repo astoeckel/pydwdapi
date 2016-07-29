@@ -225,7 +225,8 @@ class PyDWDApi:
                    extents=None,
                    ts=None,
                    resolution=256,
-                   altitude=None):
+                   altitude=None,
+                   bare=False):
         """
         Returns a Matplotlib figure which pictures the given quantity. Mainly
         for debugging purposes.
@@ -281,38 +282,43 @@ class PyDWDApi:
                   vmin=vmin,
                   vmax=vmax,
                   cmap=cmap)
+        if bare:
+            ax.set_axis_off()
+            ax.get_xaxis().set_visible(False)
+            ax.get_yaxis().set_visible(False)
 
-        # Plot Germany's outline
-        border = np.array(GERMAN_BORDER)
-        ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
+        else:
+            # Plot Germany's outline
+            border = np.array(GERMAN_BORDER)
+            ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
 
-        # Plot used stations' locations and names
-        for name, lat, lon, _ in self.stations.name_and_location_list():
-            ax.plot(lon, lat, '+', markersize=10, color='k')
-            ax.annotate(name,
-                        xy=(lon, lat),
-                        xytext=(0.2, 0.2),
-                        textcoords='offset points')
+            # Plot used stations' locations and names
+            for name, lat, lon, _ in self.stations.name_and_location_list():
+                ax.plot(lon, lat, '+', markersize=10, color='k')
+                ax.annotate(name,
+                            xy=(lon, lat),
+                            xytext=(0.2, 0.2),
+                            textcoords='offset points')
 
-        ax.set_xlabel("Longitude")
-        ax.set_ylabel("Latitude")
-        ax.set_title(time.strftime("%Y/%m/%d %H:%M", time.localtime(res_ts)))
-        ax.set_xlim(min_lon, max_lon)
-        ax.set_ylim(min_lat, max_lat)
-        ax.set_aspect((max_lon - min_lon) / (max_lat - min_lat))
+            ax.set_xlabel("Longitude")
+            ax.set_ylabel("Latitude")
+            ax.set_title(time.strftime("%Y/%m/%d %H:%M", time.localtime(res_ts)))
+            ax.set_xlim(min_lon, max_lon)
+            ax.set_ylim(min_lat, max_lat)
+            ax.set_aspect((max_lon - min_lon) / (max_lat - min_lat))
 
-        # Plot the colorbar
-        title = (MODALITY_TITLES[modality] if modality in MODALITY_TITLES else
-                 modality)
-        unit = (" [" + MODALITY_UNITS[
-            modality] + "]" if modality in MODALITY_UNITS else "")
-        ax_cbar = fig.add_axes([0.0, 0.0, 1.0, 0.025])
-        cbar = matplotlib.colorbar.ColorbarBase(
-            ax_cbar,
-            orientation='horizontal',
-            norm=matplotlib.colors.Normalize(vmin, vmax),
-            cmap=cmap)
-        cbar.set_label(title + unit)
+            # Plot the colorbar
+            title = (MODALITY_TITLES[modality] if modality in MODALITY_TITLES else
+                     modality)
+            unit = (" [" + MODALITY_UNITS[
+                modality] + "]" if modality in MODALITY_UNITS else "")
+            ax_cbar = fig.add_axes([0.0, 0.0, 1.0, 0.025])
+            cbar = matplotlib.colorbar.ColorbarBase(
+                ax_cbar,
+                orientation='horizontal',
+                norm=matplotlib.colors.Normalize(vmin, vmax),
+                cmap=cmap)
+            cbar.set_label(title + unit)
 
         return fig
 
