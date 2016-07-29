@@ -43,7 +43,9 @@ if __name__ == '__main__':
     api.update()
     api.render_map(sys.argv[3],
                    extents,
-                   resolution=256).savefig(sys.argv[3] + ".pdf",
-                                           format='pdf',
-                                           bbox_inches='tight')
+                   resolution=64,
+                   bare=True).savefig(sys.argv[3] + ".png",
+                                           format='png',
+                                           bbox_inches='tight',
+                                           pad_inches=0)
 
