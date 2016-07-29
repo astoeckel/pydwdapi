@@ -138,6 +138,9 @@ class PyDWDApi:
 
 
     def update(self):
+        if not self.ftp_user or not self.ftp_password:
+            logger.warn("No username or password given, will not download new data")
+            return
         with Database(self.database_file) as database:
             if self.sources.update(self.ftp_user, self.ftp_password,
                                    self.stations, database):
