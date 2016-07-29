@@ -73,7 +73,7 @@ class Stations:
         for sid in self.ids.keys():
             sname = sorted(self.ids[sid], key=lambda x: len(x))[0]
             slat, slon, salt = self.coords[sid]
-            res.append((sname, slat, slon, salt))
+            res.append((sname, slat, slon, salt, sid))
         return res
 
 ################################################################################

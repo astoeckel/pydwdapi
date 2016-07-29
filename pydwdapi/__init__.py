@@ -287,7 +287,7 @@ class PyDWDApi:
         ax.plot(border[:, 0], border[:, 1], '-', color="#dddddd", linewidth=5)
 
         # Plot used stations' locations and names
-        for name, lat, lon, _ in self.stations.name_and_location_list():
+        for name, lat, lon, _, _ in self.stations.name_and_location_list():
             ax.plot(lon, lat, '+', markersize=10, color='k')
             ax.annotate(name,
                         xy=(lon, lat),
