@@ -54,6 +54,9 @@ SQL_STORE_OBSERVATION = "INSERT INTO observations VALUES (?, ?, ?, ?, ?)"
 # SQL used to retrieve the latest observations
 SQL_QUERY_OBSERVATIONS = "SELECT value, timestamp, station, source FROM observations WHERE modality = ? AND timestamp > ? AND timestamp <= ? ORDER BY timestamp DESC"
 
+# SQL used to retrieve the latest observations
+SQL_QUERY_STATION_OBSERVATIONS = "SELECT value, timestamp, modality, source FROM observations WHERE station = ? AND timestamp > ? AND timestamp <= ? ORDER BY timestamp DESC"
+
 # Map used by the Database class to map between the individual modality names
 # and the id which is actually stored in the database
 MODALITY_MAP = {
@@ -65,6 +68,7 @@ MODALITY_MAP = {
     "wind_direction": 600,
     "precipitation": 700
 }
+MODALITY_ID_MAP = {v: k for k, v in MODALITY_MAP.items()}
 
 
 class Database:
@@ -162,5 +166,22 @@ class Database:
             station_id = row[2]
             if not station_id in res:
                 res[station_id] = (row[0], row[1], row[3])
+        return res
+
+    def query_observations_for_station(self, station_id, since=0.0, max_ts=1e20):
+        """
+        Queries all available observations for the given station id up to the
+        given timestamp.
+        """
+        response = self.conn.execute(
+            SQL_QUERY_STATION_OBSERVATIONS,
+            (station_id, since, max_ts)).fetchall()
+        res = {}
+        for row in response:
+            modality_id = row[2]
+            if modality_id in MODALITY_ID_MAP:
+                modality = MODALITY_ID_MAP[modality_id]
+                if not modality in res:
+                    res[modality] = (row[0], row[1], row[3])
         return res
 
