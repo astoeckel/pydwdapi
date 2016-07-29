@@ -19,6 +19,8 @@ import math
 import numpy as np
 import time
 
+from numbers import Number
+
 from .altitude_data import AltitudeData
 from .database import Database
 from .interpolator import Interpolator
@@ -92,6 +94,9 @@ MODALITY_VRANGE = {
 
 # Map defining the color scheme used when coloring the maps
 MODALITY_COLORMAP = {"wind_direction": "hsv"}
+
+class PyDWDApiException(Exception):
+    pass
 
 
 class PyDWDApi:
@@ -168,13 +173,16 @@ class PyDWDApi:
             else:
                 value[1] = value[1] - 1
 
+    def _since_max_ts_pair(self, ts=None):
+        ts = time.time() if ts is None else ts
+        since = ts - self.max_observation_age
+        return since, ts
+
     def interpolate_observations(self, modalities, lats, lons, alts, ts=None):
         """
         Returns interpolated data for the given observation modality and an
         array of latitudes, longitudes and altitudes.
         """
-        from numbers import Number
-
         # Converts the incomming data to arrays in case scalar values are given
         if type(modalities) is str:
             modalities = [modalities]
@@ -193,14 +201,11 @@ class PyDWDApi:
             res = []
             for modality in modalities:
                 # Load the observations for this timestamp from the database
-                ts = time.time() if ts is None else ts
-                since = ts - self.max_observation_age
+                since, max_ts = self._since_max_ts_pair(ts)
                 observations = database.query_observations(modality, since,
-                                                           ts)
+                                                           max_ts)
                 if (len(observations) == 0):
-                    raise Exception(
-                        "No matching observations found for modality " +
-                        modality)
+                    return None, 0.0
                 latest_ts = max(map(lambda x: x[1], observations.values()))
                 res_ts = max(res_ts, latest_ts)
 
@@ -219,6 +224,85 @@ class PyDWDApi:
                 # Perform some cache management -- update the usage counts
                 self._update_caches(cache_entry)
         return res, res_ts
+
+    def query_stations(self, station_ids, ts=None):
+        """
+        Queries the current weather data for the given stations.
+        """
+        if isinstance(station_ids, Number):
+            station_ids = [station_ids]
+
+        res = {}
+        with Database(self.database_file) as database:
+            since, max_ts = self._since_max_ts_pair(ts)
+            for station_id in station_ids:
+                since, max_ts = self._since_max_ts_pair(ts)
+                observations = database.query_observations_for_station(station_id, since, max_ts)
+                for key, value in observations.items():
+                    observations[key] = {
+                        "value": observations[key][0],
+                        "dt": observations[key][1],
+                        "src": observations[key][2]
+                    }
+                if station_id in self.stations.ids:
+                    coords = self.stations.coords[station_id]
+                res[station_id] = {
+                    "meta": {
+                        "names":  self.stations.ids[station_id],
+                        "lat": coords[0],
+                        "lon": coords[1],
+                        "alt": coords[2]
+                    },
+                    "data": observations
+                }
+        return res
+
+    def query_interpolated(self, lat, lon, alt=None, ts=None):
+        """
+        Queries the interpolated data for all modalities at a certain location
+        and returns a JSON structure containing the interpolated data. If no
+        altitude is given, the altitude is loaded from the internal altitude
+        data.
+        """
+
+        def query_interpolated_key(tar, key, key_tar=None):
+            key_tar = key if key_tar is None else key_tar
+            try:
+                res, res_ts = self.interpolate_observations(key, lat, lon,
+                                                           alt)
+                if not res is None:
+                    tar[key_tar] = round(res[0][0], 2)
+                    response["dt"] = max(res_ts, response["dt"])
+            except Exception:
+                logger.exception("Exception in query_interpolated_key")
+                pass
+
+        # Try to find the altitude if none is given
+        if alt is None:
+            if api.altitude_data.in_bounds(lat, lon):
+                alt = round(self.altitude_data.query(lat, lon)[0], 2)
+            else:
+                raise PyDWDApiException("No altitude data available for the given point, please specify explicitly!")
+
+        # Assemble the response
+        response = {
+            "coord": {
+                "lat": lat,
+                "lon": lon,
+                "lat": alt
+            },
+            "main": {},
+            "wind": {},
+            "dt": 0.0
+        }
+        query_interpolated_key(response["main"], "temperature", "temp")
+        query_interpolated_key(response["main"], "pressure")
+        query_interpolated_key(response["main"], "humidity")
+        query_interpolated_key(response["main"], "precipitation")
+        query_interpolated_key(response["wind"], "wind_speed", "speed")
+        query_interpolated_key(response["wind"], "wind_speed_max", "max")
+        query_interpolated_key(response["wind"], "wind_direction", "deg")
+        return response
 
     def render_map(self,
                    modality,

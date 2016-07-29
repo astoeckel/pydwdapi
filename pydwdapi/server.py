@@ -40,77 +40,89 @@ def create_server(api, port=8080, interface="127.0.0.1"):
 
     class Handler(http.server.BaseHTTPRequestHandler):
         def _send_json(self, http_code, obj):
+            # Make sure only one response is sent
+            if self.done:
+                return
+            self.done = True
+
+            # Write the response header, including the error code
             self.send_response(http_code)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
 
+            # Write the file
             self.wfile.write(
-                json.dumps(
-                    obj, indent=2, sort_keys=True).encode("utf-8"))
+                json.dumps(obj, indent=2, sort_keys=True).encode("utf-8"))
 
         def _error(self, http_code, msg):
             self._send_json(http_code, {"error": msg})
 
-        def do_GET(self):
-            def interpolate(tar, key, key_tar=None):
-                key_tar = key if key_tar is None else key_tar
-                try:
-                    res, res_ts = api.interpolate_observations(key, lat, lon,
-                                                               alt)
-                    tar[key_tar] = round(res[0][0], 2)
-                    response["dt"] = max(res_ts, response["dt"])
-                except Exception:
-                    pass
+        def _handle_api_1_0_weather(self, o, q):
+            """
+            Handles queries to the /api/1.0/weather url.
+            """
+            q = urllib.parse.parse_qs(o.query, keep_blank_values=True)
+            try:
+                lat = float(q["lat"][0])
+                lon = float(q["lon"][0])
+                alt = float(q["alt"][0]) if "alt" in q else None
+            except Exception:
+                logger.exception("Error while parsing the arguments")
+                self._error(400, "Invalid query")
+                return
 
-            response = {"coord": {}, "main": {}, "wind": {}, "dt": 0.0}
+            # Query the weather data and fetch the response
+            api.update()
+            return api.query_interpolated(lat, lon, alt)
+
+        def _handle_api_1_0_station(self, o, q):
+            """
+            Handles queries to the /api/1.0/station url.
+            """
+            try:
+                if ("id" in q) == ("ids" in q):
+                    self._error(400, "Either id or ids must be specified")
+                    return
+                if "id" in q:
+                    station_ids = map(int, q["id"])
+                else:
+                    station_ids = map(int, q["ids"][0].split(","))
+                ts = float(q["ts"]) if "ts" in q else None
+            except Exception:
+                logger.exception("Error while parsing the arguments")
+                self._error(400, "Invalid query")
+                return
+
+            # Query the weather data and fetch the response
+            api.update()
+            return api.query_stations(station_ids, ts)
+
+        def _handle_api_1_0_stations(self, o, q):
+            """
+            Handles queries to the /api/1.0/stations url.
+            """
+            return sorted(api.stations.name_and_location_list())
+
+        def do_GET(self):
+            """
+            Responds to a user's GET request. This function implements the basic
+            routing and error handling.
+            """
+            self.done = False
             try:
                 # Make sure the URL is correct
                 o = urllib.parse.urlparse(self.path)
-                if o.path != "/api/1.0/weather":
+                q = urllib.parse.parse_qs(o.query, keep_blank_values=True)
+                if o.path == "/api/1.0/weather":
+                    response = self._handle_api_1_0_weather(o, q)
+                elif o.path == "/api/1.0/station":
+                    response = self._handle_api_1_0_station(o, q)
+                elif o.path == "/api/1.0/stations":
+                    response = self._handle_api_1_0_stations(o, q)
+                else:
                     self._error(404,
                                 "Requested file " + o.path + " not found!")
                     return
-
-                # Make sure the query is correct
-                q = urllib.parse.parse_qs(o.query, keep_blank_values=True)
-                try:
-                    lat = float(q["lat"][0])
-                    lon = float(q["lon"][0])
-                    if "alt" in q:
-                        alt = float(q["alt"][0])
-                    else:
-                        if api.altitude_data.in_bounds(lat, lon):
-                            alt = round(
-                                api.altitude_data.query(lat, lon)[0], 2)
-                        else:
-                            self._error(
-                                400,
-                                "No altitude data available for given point, please specify explicitly!")
-                            return
-                except Exception:
-                    logger.exception("Error while parsing the arguments")
-                    self._error(400, "Invalid query")
-                    return
-
-                # Write the coordinates
-                response["coord"] = {
-                    "alt": float(alt),
-                    "lat": float(lat),
-                    "lon": float(lon)
-                }
-
-                # Query the weather data and add it to the response
-                api.update()
-
-                # Add the weather data to the response
-                interpolate(response["main"], "temperature", "temp")
-                interpolate(response["main"], "pressure")
-                interpolate(response["main"], "humidity")
-                interpolate(response["main"], "precipitation")
-                interpolate(response["wind"], "wind_speed", "speed")
-                interpolate(response["wind"], "wind_speed_max", "max")
-                interpolate(response["wind"], "wind_direction", "deg")
-
             except:
                 logger.exception("Error while processing the request")
                 self._error(500, "Internal error")
