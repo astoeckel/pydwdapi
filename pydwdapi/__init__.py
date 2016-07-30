@@ -292,7 +292,7 @@ class PyDWDApi:
             "coord": {
                 "lat": lat,
                 "lon": lon,
-                "lat": alt
+                "alt": alt
             },
             "main": {},
             "wind": {},
