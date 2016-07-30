@@ -87,7 +87,7 @@ def create_server(api, port=8080, interface="127.0.0.1"):
                     station_ids = map(int, q["id"])
                 else:
                     station_ids = map(int, q["ids"][0].split(","))
-                ts = float(q["ts"]) if "ts" in q else None
+                ts = float(q["ts"][0]) if "ts" in q else None
             except Exception:
                 logger.exception("Error while parsing the arguments")
                 self._error(400, "Invalid query")
