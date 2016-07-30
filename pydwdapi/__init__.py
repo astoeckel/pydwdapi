@@ -282,7 +282,7 @@ class PyDWDApi:
 
         # Try to find the altitude if none is given
         if alt is None:
-            if api.altitude_data.in_bounds(lat, lon):
+            if self.altitude_data.in_bounds(lat, lon):
                 alt = round(self.altitude_data.query(lat, lon)[0], 2)
             else:
                 raise PyDWDApiException("No altitude data available for the given point, please specify explicitly!")
